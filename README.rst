@@ -5,11 +5,11 @@ ONVIF Client Implementation in Python
 
 Dependencies
 ------------
-`Python 2.x` (For a Python 3 compatible fork, see https://github.com/FalkTannhaeuser/python-onvif-zeep)
+`Python 3.5 or 3.6`
 
-`suds <https://pypi.python.org/pypi/suds>`_ >= 0.4
+`suds-py3 <https://github.com/cackharot/suds-py3>`_ >= 1.3
 
-`suds-passworddigest <https://pypi.python.org/pypi/suds_passworddigest>`_
+`suds-passworddigest-py3 <https://github.com/PypeBros/suds-passworddigest-py3>`_
 
 Install python-onvif
 --------------------

@@ -16,25 +16,25 @@ def perform_move(ptz, request, timeout):
     ptz.Stop({'ProfileToken': request.ProfileToken})
 
 def move_up(ptz, request, timeout=1):
-    print 'move up...'
+    print('move up...')
     request.Velocity.PanTilt._x = 0
     request.Velocity.PanTilt._y = YMAX
     perform_move(ptz, request, timeout)
 
 def move_down(ptz, request, timeout=1):
-    print 'move down...'
+    print('move down...')
     request.Velocity.PanTilt._x = 0
     request.Velocity.PanTilt._y = YMIN
     perform_move(ptz, request, timeout)
 
 def move_right(ptz, request, timeout=1):
-    print 'move right...'
+    print('move right...')
     request.Velocity.PanTilt._x = XMAX
     request.Velocity.PanTilt._y = 0
     perform_move(ptz, request, timeout)
 
 def move_left(ptz, request, timeout=1):
-    print 'move left...'
+    print('move left...')
     request.Velocity.PanTilt._x = XMIN
     request.Velocity.PanTilt._y = 0
     perform_move(ptz, request, timeout)

@@ -1,8 +1,8 @@
 __version__ = '0.0.1'
 
 import os.path
-import urlparse
-import urllib
+import urllib.parse
+import urllib.request, urllib.parse, urllib.error
 from threading import Thread, RLock
 
 import logging
@@ -16,11 +16,11 @@ from suds.wsse import Security, UsernameToken
 from suds.cache import ObjectCache, NoCache
 from suds_passworddigest.token import UsernameDigestToken
 from suds.bindings import binding
+from suds.sax.date import UtcTimezone
 binding.envns = ('SOAP-ENV', 'http://www.w3.org/2003/05/soap-envelope')
 
 from onvif.exceptions import ONVIFError
-from definition import SERVICES, NSMAP
-from suds.sax.date import UTC
+from .definition import SERVICES, NSMAP
 import datetime as dt
 # Ensure methods to raise an ONVIFError Exception
 # when some thing was wrong
@@ -50,7 +50,7 @@ class UsernameDigestTokenDtDiff(UsernameDigestToken):
         if self.dt_diff :
             dt_adjusted = (self.dt_diff + dt.datetime.utcnow())
         UsernameToken.setcreated(self, dt=dt_adjusted, *args, **kwargs)
-        self.created = str(UTC(self.created))
+        self.created = str(self.created.replace(tzinfo=UtcTimezone()))
 
 
 class ONVIFService(object):
@@ -105,7 +105,7 @@ class ONVIFService(object):
 
 
         # Convert pathname to url
-        self.url = urlparse.urljoin('file:', urllib.pathname2url(url))
+        self.url = urllib.parse.urljoin('file:', urllib.request.pathname2url(url))
         self.xaddr = xaddr
         # Create soap client
         if not ws_client:
@@ -305,7 +305,7 @@ class ONVIFCamera(object):
         self.capabilities = self.devicemgmt.GetCapabilities()
 
         with self.services_lock:
-            for sname in self.services.keys():
+            for sname in list(self.services.keys()):
                 xaddr = getattr(self.capabilities, sname.capitalize).XAddr
                 self.services[sname].ws_client.set_options(location=xaddr)
 
@@ -322,7 +322,7 @@ class ONVIFCamera(object):
             return
 
         with self.services_lock:
-            for service in self.services.keys():
+            for service in list(self.services.keys()):
                 self.services[service].set_wsse(user, passwd)
 
     def get_service(self, name, create=True):

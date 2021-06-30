@@ -16,7 +16,7 @@ DEBUG = False
 
 def log(ret):
     if DEBUG:
-        print ret
+        print(ret)
 
 class TestDevice(unittest.TestCase):
 

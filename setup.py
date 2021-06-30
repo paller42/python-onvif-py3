@@ -5,7 +5,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 version_path = os.path.join(here, 'onvif/version.txt')
 version = open(version_path).read().strip()
 
-requires = [ 'suds >= 0.4', 'suds-passworddigest' ]
+requires = [ 'suds-py3 >= 1.3', 'suds-passworddigest' ]
 
 CLASSIFIERS = [
     'Development Status :: 3 - Alpha',
@@ -21,9 +21,9 @@ CLASSIFIERS = [
     'Topic :: Multimedia :: Sound/Audio',
     'Topic :: Utilities',
     "Programming Language :: Python",
-    "Programming Language :: Python :: 2",
-    "Programming Language :: Python :: 2.6",
-    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
 ]
 
 wsdl_files = [ 'wsdl/' + item for item in os.listdir('wsdl') ]
@@ -35,11 +35,11 @@ setup(
       long_description=open('README.rst', 'r').read(),
       author='Cherish Chen',
       author_email='sinchb128@gmail.com',
-      maintainer='sinchb',
-      maintainer_email='sinchb128@gmail.com',
+      maintainer='gaborpaller',
+      maintainer_email='gaborpaller@gmail.com',
       license='MIT',
       keywords=['ONVIF', 'Camera', 'IPC'],
-      url='http://github.com/quatanium/python-onvif',
+      url='https://github.com/paller42/python-onvif-py3',
       zip_safe=False,
       packages=find_packages(exclude=['docs', 'examples', 'tests']),
       install_requires=requires,
