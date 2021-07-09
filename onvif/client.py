@@ -234,7 +234,7 @@ class ONVIFCamera(object):
 
     def __init__(self, host, port ,user, passwd, wsdl_dir=os.path.join(os.path.dirname(os.path.dirname(__file__)), "wsdl"),
                  cache_location=None, cache_duration=None,
-                 encrypt=True, daemon=False, no_cache=False, adjust_time=False):
+                 encrypt=True, daemon=False, no_cache=False, adjust_time=False,update_xaddrs=True):
         self.services_template = {'devicemgmt': None, 'ptz': None, 'media': None,
                          'imaging': None, 'events': None, 'analytics': None }
         self.use_services_template = {'devicemgmt': True, 'ptz': True, 'media': True,
@@ -256,11 +256,13 @@ class ONVIFCamera(object):
         self.services_lock = RLock()
 
         # Set xaddrs
-        self.update_xaddrs()
+        self.init_devmgmt()
+        if( update_xaddrs ):
+            self.update_xaddrs()
 
         self.to_dict = ONVIFService.to_dict
 
-    def update_xaddrs(self):
+    def init_devmgmt(self):
         # Establish devicemgmt service first
         self.dt_diff = None
         self.devicemgmt  = self.create_devicemgmt_service()
@@ -270,6 +272,8 @@ class ONVIFCamera(object):
             self.dt_diff = cam_date - dt.datetime.utcnow()
             self.devicemgmt.dt_diff = self.dt_diff
             self.devicemgmt.set_wsse()
+
+    def update_xaddrs(self):
         # Get XAddr of services on the device
         self.xaddrs = { }
         capabilities = self.devicemgmt.GetCapabilities({'Category': 'All'})

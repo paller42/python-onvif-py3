@@ -1,5 +1,5 @@
-python-onvif
-============
+python-onvif-py3
+================
 
 ONVIF Client Implementation in Python
 
@@ -17,13 +17,14 @@ Install python-onvif
 
 You should clone this repository and run setup.py::
 
-    cd python-onvif && python setup.py install
-
-**From PyPI**
+::
+    cd python-onvif && python3 setup.py install
+    
+or if you don't have superuser privileges:
 
 ::
+    cd python-onvif && python3 setup.py install --user
 
-    pip install onvif
 
 Getting Started
 ---------------
@@ -38,11 +39,19 @@ Initialize an ONVIFCamera instance
 
 Now, an ONVIFCamera instance is available. By default, a devicemgmt service is also available if everything is OK.
 
-So, all operations defined in the WSDL document::
+So, all operations defined in the WSDL document
 
 /etc/onvif/wsdl/devicemgmt.wsdl
 
 are available.
+
+Some cameras fail on GetCapabilities device management function if authentication is not provided. A parameter of the constructor allows GetCapabilities invocation
+to be skipped.
+
+::
+	cam = ONVIFCamera(address, port, None, None, update_xaddrs=False)
+	resp = cam.devicemgmt.GetHostname()
+
 
 Get information from your camera
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
