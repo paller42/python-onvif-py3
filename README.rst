@@ -15,14 +15,16 @@ Install python-onvif
 --------------------
 **From Source**
 
-You should clone this repository and run setup.py::
+You should clone this repository and run setup.py
 
 ::
+
     cd python-onvif && python3 setup.py install
     
 or if you don't have superuser privileges:
 
 ::
+
     cd python-onvif && python3 setup.py install --user
 
 
@@ -49,6 +51,7 @@ Some cameras fail on GetCapabilities device management function if authenticatio
 to be skipped.
 
 ::
+
 	cam = ONVIFCamera(address, port, None, None, update_xaddrs=False)
 	resp = cam.devicemgmt.GetHostname()
 
